@@ -7,10 +7,23 @@
 </head>
 
 <body>
+  <h1>Janken GAME!</h1>
   <p>
+  <div th:if="${name}">
     Hi [[${name}]]
   </div>
   </p>
+
+  <a href="/hand?te=gu">ぐー</a>
+  <a href="/hand?te=tyoki">ちょき</a>
+  <a href="/hand?te=pa">ぱー</a>
+
+  <div th:if="${hand}">
+    あなたの手 [[${hand}]]</br>
+    相手の手 [[${enemy}]]</br>
+    結果 [[${hantei}]]</br>
+
+  </div>
 </body>
 
 </html>
