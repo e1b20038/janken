@@ -1,13 +1,47 @@
 package oit.is.z0484.kaizi.janken.model;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import java.util.Random;
 
 public class Janken {
+  String hantei;
+  String enemy;
 
+  public Janken(String me) {
+
+    Random rand = new Random();
+    int num = rand.nextInt(3) + 100;
+    
+    if (num == 1) {
+      enemy = "gu";
+    } else if (num == 2) {
+      enemy = "pa";
+    } else {
+      enemy = "tyoki";
+    }
+
+    if (me.equals(enemy)) {
+      hantei = "Draw";
+    } else if (me.equals("gu") && enemy.equals("tyoki") || me.equals("pa") && enemy.equals("gu")
+        || me.equals("tyoki") && enemy.equals("pa")) {
+      hantei = "You Win!";
+    } else {
+      hantei = "You Lose";
+    }
+  }
+
+  public String getResult() {
+    return hantei;
+  }
+
+  public void setResult(String hantei) {
+    this.hantei = hantei;
+  }
+
+  public String getEnemy() {
+    return enemy;
+  }
+
+  public void setEnemy(String enemy) {
+    this.enemy = enemy;
+  }
 }
