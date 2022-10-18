@@ -36,7 +36,7 @@ public class JankenAuthConfiguration {
         .build();
     UserDetails user2 = users
         .username("user2")
-        .password("2y$10$on4M8vzv1cFfp.0Z.PAmMufskVvXnLAQfJeG0FHkobjBIavE2wg1G")
+        .password("$2y$10$CZk76t2XCaCvp7C..I0JAuZzkOGwsm1UfIYibBChzck8qGz8BK58e")
         .roles("USER")
         .build();
 

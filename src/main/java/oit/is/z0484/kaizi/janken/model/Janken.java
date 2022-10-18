@@ -9,11 +9,11 @@ public class Janken {
   public Janken(String me) {
 
     Random rand = new Random();
-    int num = rand.nextInt(3) + 100;
-    
-    if (num == 1) {
+    int num = rand.nextInt(3);
+
+    if (num == 0) {
       enemy = "gu";
-    } else if (num == 2) {
+    } else if (num == 1) {
       enemy = "pa";
     } else {
       enemy = "tyoki";
