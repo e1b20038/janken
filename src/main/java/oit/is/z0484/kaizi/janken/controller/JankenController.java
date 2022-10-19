@@ -1,9 +1,11 @@
 package oit.is.z0484.kaizi.janken.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,23 +15,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import oit.is.z0484.kaizi.janken.model.Janken;
 import oit.is.z0484.kaizi.janken.model.Entry;
 
+import oit.is.z0484.kaizi.janken.model.User;
+import oit.is.z0484.kaizi.janken.model.UserMapper;
+
 @Controller
 public class JankenController {
 
+  /**
+   * @GetMapping("/janken")
+   * public String janken() {
+   * return "janken.html";
+   * }
+   */
+
+  /*
+   * @Autowired
+   * private Entry entry;
+   *
+   * @GetMapping("/janken")
+   * public String janken(Principal prin, ModelMap model) {
+   * String loginUser = prin.getName();
+   * this.entry.addUser(loginUser);
+   * model.addAttribute("entry", this.entry);
+   * return "janken.html";
+   * }
+   */
+
   @Autowired
-  private Entry entry;
+  UserMapper userMapper;
 
-
- /**  @GetMapping("/janken")
-  public String janken() {
-    return "janken.html";
-  }*/
-
- @GetMapping("/janken")
-  public String janken(Principal prin, ModelMap model) {
-    String loginUser = prin.getName();
-    this.entry.addUser(loginUser);
-    model.addAttribute("entry", this.entry);
+  @GetMapping("/janken")
+  @Transactional
+  public String janken(ModelMap model) {
+    ArrayList<User> users1 = userMapper.selectAllUserName();
+    model.addAttribute("users1", users1);
     return "janken.html";
   }
 

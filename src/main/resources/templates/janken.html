@@ -11,19 +11,23 @@
 
   <h1>Janken GAME!</h1>
 
-  <p>
-    <!--entryがあった場合に表示される-->
-    <!--objectはdivの中でentryオブジェクトのフィールドにアクセスすることを示す-->
+  <!--<p>
   <div th:if="${entry}">
     エントリー
     <ul>
       <li th:each="user : ${entry.users}">[[${user}]]</li>
-
     </ul>
   </div>
-  </p>
-  <p>
+</p>-->
 
+  <p th:if="${users1}">
+  <div th:each="users,stat:${users1}">
+    <li>[[${users.name}]]</li>
+  </div>
+  </p>
+
+
+  <p>
   <div th:if="${login_user}">
     Hi [[${login_user}]]
   </div>
