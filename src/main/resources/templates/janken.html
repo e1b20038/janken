@@ -11,6 +11,12 @@
 
   <h1>Janken GAME!</h1>
 
+  <p>
+  <div th:if="${login_user}">
+    Hi [[${login_user}]]
+  </div>
+  </p>
+
   <!--<p>
   <div th:if="${entry}">
     エントリー
@@ -20,19 +26,27 @@
   </div>
 </p>-->
 
+  <h1>エントリー</h1>
   <p th:if="${users1}">
   <div th:each="users,stat:${users1}">
     <li>[[${users.name}]]</li>
   </div>
   </p>
 
-
-  <p>
-  <div th:if="${login_user}">
-    Hi [[${login_user}]]
+  <h1>試合結果</h1>
+  <p th:if="${result1}">
+  <div th:each="matches, stat:${result1}">
+    <tr>
+      <td>ID:[[${stat.index}]]</td>
+      <td>user1:[[${matches.user1}]]</td>
+      <td>user2:[[${matches.user2}]]</td>
+      <td>user1の手:[[${matches.user1Hand}]]</td>
+      <td>user2の手:[[${matches.user2Hand}]]</td>
+    </tr>
   </div>
   </p>
 
+  <!--
   <p>
     <a href="/hand?te=gu">ぐー</a>
     <a href="/hand?te=tyoki">ちょき</a>
@@ -45,6 +59,7 @@
 
   </div>
   </p>
+-->
 </body>
 
 </html>
