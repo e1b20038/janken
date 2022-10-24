@@ -71,8 +71,7 @@ public class JankenAuthConfiguration {
 
     http.logout().logoutSuccessUrl("/"); // ログアウト時は "http://localhost:8080/" に戻る
 
-    
-    http.csrf().disable();
+        http.csrf().disable();
     http.headers().frameOptions().disable();
     return http.build();
   }

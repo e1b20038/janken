@@ -27,15 +27,14 @@
 </p>-->
 
   <h1>エントリー</h1>
-  <p th:if="${users1}">
-  <div th:each="users,stat:${users1}">
-    <li>[[${users.name}]]</li>
-  </div>
+  <p>
+    <li th:each="user :${users}"><a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></li>
   </p>
 
+  <p>
   <h1>試合結果</h1>
-  <p th:if="${result1}">
-  <div th:each="matches, stat:${result1}">
+  <p th:if="${result}">
+  <div th:each="matches, stat:${result}">
     <tr>
       <td>ID:[[${stat.index}]]</td>
       <td>user1:[[${matches.user1}]]</td>
