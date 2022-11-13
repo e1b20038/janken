@@ -100,12 +100,24 @@ public class JankenController {
     String loginUserName = prin.getName();
     User loginUser = userMapper.selectByName(loginUserName);
 
+    ArrayList<MatchInfo> lookMatchInfo = matchinfoMapper.selectAllMatchInfo();
     model.addAttribute("login_user", loginUserName);
 
-    MatchInfo addMatchInfo = new MatchInfo(loginUser.getId(), id, te, true);
+    int flag = 0;
 
-    matchinfoMapper.insertMatchInfo(addMatchInfo);
+    for (MatchInfo mi : lookMatchInfo) {
+      if (mi.getUser2() == loginUser.getId() && mi.getUser1() == id && mi.getIsActive() == true) {
+        Match matching = new Match(mi.getUser1(), loginUser.getId(), mi.getUser1Hand(), te, true);
+        matchMapper.insertMatch(matching);
+        flag = 1;
+      }
+    }
+    if (flag == 0) {
+      MatchInfo addMatchInfo = new MatchInfo(loginUser.getId(), id, te, true);
+      // addMatchInfo.setisActive(true);
 
+      matchinfoMapper.insertMatchInfo(addMatchInfo);
+    }
     return "wait.html";
   }
 }

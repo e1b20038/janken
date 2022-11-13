@@ -13,7 +13,7 @@ public interface MatchInfoMapper {
   @Select("SELECT * from matchinfo")
   ArrayList<MatchInfo> selectAllMatchInfo();
 
-  @Select("SELECT user1, user2, isActive from matchinfo where isActive is true")
+  @Select("SELECT * from matchinfo where isActive is true")
   ArrayList<MatchInfo> selectActiveInfo();
 
   @Insert("INSERT INTO matchinfo (user1, user2, user1Hand, isActive) VALUES (#{user1}, #{user2}, #{user1Hand},#{isActive});")

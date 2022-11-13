@@ -20,7 +20,15 @@ public class Match {
     this.user2 = cpu;
     this.user1Hand = user1Hand;
     this.user2Hand = cpuHand;
-    // this.isActive = isActive;
+
+  }
+
+  public Match(int user1, int cpu, String user1Hand, String cpuHand, boolean isActive) {
+    this.user1 = user1;
+    this.user2 = cpu;
+    this.user1Hand = user1Hand;
+    this.user2Hand = cpuHand;
+    this.isActive = isActive;
 
   }
 
