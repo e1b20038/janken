@@ -107,14 +107,15 @@ public class JankenController {
 
     for (MatchInfo mi : lookMatchInfo) {
       if (mi.getUser2() == loginUser.getId() && mi.getUser1() == id && mi.getIsActive() == true) {
-        Match matching = new Match(mi.getUser1(), loginUser.getId(), mi.getUser1Hand(), te, true);
+        Match matching = new Match(mi.getUser1(), loginUser.getId(), mi.getUser1Hand(), te);
+        matching.setIsActive(true);
         matchMapper.insertMatch(matching);
         flag = 1;
       }
     }
     if (flag == 0) {
-      MatchInfo addMatchInfo = new MatchInfo(loginUser.getId(), id, te, true);
-      // addMatchInfo.setisActive(true);
+      MatchInfo addMatchInfo = new MatchInfo(loginUser.getId(), id, te);
+      addMatchInfo.setIsActive(true);
 
       matchinfoMapper.insertMatchInfo(addMatchInfo);
     }

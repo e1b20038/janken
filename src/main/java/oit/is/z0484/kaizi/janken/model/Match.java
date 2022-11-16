@@ -72,11 +72,11 @@ public class Match {
     this.user2Hand = user2Hand;
   }
 
-  public boolean getisActive() {
+  public boolean getIsActive() {
     return isActive;
   }
 
-  public void setisActive(Boolean isActive) {
+  public void setIsActive(Boolean isActive) {
     this.isActive = isActive;
   }
 
