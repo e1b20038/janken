@@ -11,25 +11,28 @@
 
   <h1>Janken GAME!</h1>
 
-  <p>
   <div th:if="${login_user}">
     Hi [[${login_user}]]
   </div>
-  </p>
 
-  <!--<p>
-  <div th:if="${entry}">
-    エントリー
-    <ul>
-      <li th:each="user : ${entry.users}">[[${user}]]</li>
-    </ul>
+  <div th:if="${users}">
+    <h1>エントリー</h1>
+    <p>
+      <li th:each="user :${users}"><a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></li>
+    </p>
   </div>
-</p>-->
 
-  <h1>エントリー</h1>
-  <p>
-    <li th:each="user :${users}"><a th:href="@{/match(id=${user.id})}">[[${user.name}]]</a></li>
-  </p>
+  <h1>アクティブな試合</h1>
+  <div th:each="matchinfo, stat:${matchinfo}" th:object="${matchinfo}">
+    <tr>
+      <td th:text="'id:' + *{ID}"></td>
+      <td th:text="'user1:' + *{user1}"></td>
+      <td th:text="'user2:' + *{user2}"></td>
+      <td th:text="'isActive:' + *{isActive}"></td>
+    </tr>
+  </div>
+  </div>
+
 
   <p>
   <h1>試合結果</h1>

@@ -46,8 +46,14 @@ public class JankenAuthConfiguration {
         .roles("USER")
         .build();
 
+    UserDetails user4 = users
+        .username("いがき")
+        .password("$2y$10$Duvvrg0FJSJWle6/z9W1oubwKCYO0C4pSUHJgqk5H9VvTU.syrxzy")
+        .roles("USER")
+        .build();
+
     // 生成したユーザをImMemoryUserDetailsManagerに渡す（いくつでも良い）
-    return new InMemoryUserDetailsManager(user1, user2, user3);
+    return new InMemoryUserDetailsManager(user1, user2, user3, user4);
   }
 
   /**
@@ -71,7 +77,7 @@ public class JankenAuthConfiguration {
 
     http.logout().logoutSuccessUrl("/"); // ログアウト時は "http://localhost:8080/" に戻る
 
-        http.csrf().disable();
+    http.csrf().disable();
     http.headers().frameOptions().disable();
     return http.build();
   }

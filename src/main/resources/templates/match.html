@@ -13,17 +13,18 @@
     <span sec:authentication="name"></span> V.S. <span th:if="${cpu}">[[${cpu.name}]]</span>
   </h2>
 
-  <!-- <div>
-    <a href="/hand?te=gu">ぐー</a>
-    <a href="/hand?te=tyoki">ちょき</a>
-    <a href="/hand?te=pa">ぱー</a>
-  </div>-->
-
+  <!--
   <div>
     <a th:href="@{/fight(id=${cpu.id}, te=gu)}">ぐー</a>
     <a th:href="@{/fight(id=${cpu.id}, te=choki)}">ちょき</a>
     <a th:href="@{/fight(id=${cpu.id}, te=pa)}">ぱー</a>
-  </div>
+  </div>-->
+
+    <div>
+      <a th:href="@{/wait(id=${cpu.id}, te=gu)}">ぐー</a>
+      <a th:href="@{/wait(id=${cpu.id}, te=choki)}">ちょき</a>
+      <a th:href="@{/wait(id=${cpu.id}, te=pa)}">ぱー</a>
+    </div>
 
   <div th:if="${hand}">
     あなたの手 [[${hand}]]</br>
