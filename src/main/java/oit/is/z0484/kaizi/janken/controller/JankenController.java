@@ -3,12 +3,18 @@ package oit.is.z0484.kaizi.janken.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import oit.is.z0484.kaizi.janken.service.AsyncKekka;
 
 import oit.is.z0484.kaizi.janken.model.Janken;
 import oit.is.z0484.kaizi.janken.model.Entry;
@@ -120,5 +126,20 @@ public class JankenController {
       matchinfoMapper.insertMatchInfo(addMatchInfo);
     }
     return "wait.html";
+  }
+
+  @Autowired
+  AsyncKekka asynckekka;
+
+  @GetMapping("asyncKekka")
+  public SseEmitter asyncKekka() {
+    final SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+
+    try {
+      this.asynckekka.count(emitter);
+    } catch (IOException e) {
+      emitter.complete();
+    }
+    return emitter;
   }
 }

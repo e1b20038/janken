@@ -4,6 +4,19 @@
 <head>
   <meta charset="utf-8">
   <title>Wait</title>
+  <script>
+    window.onload = function () {
+
+      var sse = new EventSource('/asyncKekka');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage");
+        console.log(event);
+        var activeMatch = JSON.parse(event.data);
+        document.getElementById("result").textContent = event.data;
+        document.getElementById("kekka").innerHTML = "<br> <a href='/janken'>もどる</a>";
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -12,6 +25,9 @@
   <div th:if="${login_user}">
     Hi [[${login_user}]]
   </div>
+
+  <h2 id="result"></h2>
+  <p id="kekka"></p>
 
   <p>
   <p th:if="${result}"></p>
