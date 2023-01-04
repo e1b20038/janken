@@ -8,7 +8,7 @@ public class User {
   String name;
 
   public int getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(int id) {
