@@ -11,9 +11,19 @@
       sse.onmessage = function (event) {
         console.log("sse.onmessage");
         console.log(event);
-        var activeMatch = JSON.parse(event.data);
-        document.getElementById("result").textContent = event.data;
+        var match = JSON.parse(event.data);
+
+        var match_table = "Match: id " + match.id + " user1: " + match.user1 + " user2: " + match.user2 + " user1Hand: " + match.user1Hand + " user2Hand: " + match.user2Hand;
+
+        document.getElementById("result").innerHTML = match_table;
         document.getElementById("kekka").innerHTML = "<br> <a href='/janken'>もどる</a>";
+      }
+
+      var sse2 = new EventSource('/asyncWinner');
+      sse2.onmessage = function (event) {
+        console.log("sse2.onmessage");
+        console.log(event);
+        document.getElementById("winner").textContent = event.data;
       }
     }
   </script>
@@ -26,21 +36,10 @@
     Hi [[${login_user}]]
   </div>
 
-  <h2 id="result"></h2>
-  <p id="kekka"></p>
-
-  <p>
-  <p th:if="${result}"></p>
   <h1>結果</h1>
-  <div th:each="matches, stat:${result}">
-    <tr>
-      <td>ID:[[${stat.index}]]</td>
-      <td>user1:[[${matches.user1}]]</td>
-      <td>user2:[[${matches.user2}]]</td>
-      <td>user1の手:[[${matches.user1Hand}]]</td>
-      <td>user2の手:[[${matches.user2Hand}]]</td>
-    </tr>
-  </div>
+  <h2 id="winner"></h2>
+  <h3 id="result"></h3>
+  <h5 id="kekka"></h5>
   </p>
 
 </body>

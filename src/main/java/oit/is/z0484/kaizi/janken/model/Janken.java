@@ -29,6 +29,20 @@ public class Janken {
     }
   }
 
+  public static String match(Match hand) {
+    String user1Hand = hand.getUser1Hand();
+    String user2Hand = hand.getUser2Hand();
+
+    if (user1Hand == user2Hand) {
+      return "Draw";
+    } else if (user1Hand.equals("gu") && user2Hand.equals("choki") || user1Hand.equals("pa") && user2Hand.equals("gu")
+        || user1Hand.equals("choki") && user2Hand.equals("pa")) {
+      return "user1 Win!";
+    } else {
+      return "user2 Win!";
+    }
+  }
+
   public String getResult() {
     return hantei;
   }

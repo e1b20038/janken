@@ -4,6 +4,35 @@
 <head>
   <meta charset="utf-8">
   <title>janken.html</title>
+  <script>
+    window.onload = function () {
+      var sse = new EventSource('/matchtable');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage");
+        console.log(event);
+
+        var match_list = JSON.parse(event.data);
+
+        var match_table = "";
+        for (var i = 0; i < match_list.length; i++) {
+          var bgn_tr = "<tr>";
+          var end_tr = "</tr>";
+          var id = "<td> ID: " + i + 1 + "</td>";
+          var user1 = "<td> user1: " + match_list[i].user1 + "</td>";
+          var user2 = "<td> user2: " + match_list[i].user2 + "</td>";
+          var user1Hnad = "<td> user1の手: " + match_list[i].user1Hand + "</td>";
+          var user2Hand = "<td> user2の手: " + match_list[i].user2Hand + "</td>";
+
+          match_table = match_table + bgn_tr + id + user1 + user2 + user1Hand + user2Hand + end_tr;
+        }
+        console.log(match_table);
+
+        var tbody = document.getElementById("match_list");
+        tbody.innerHTML = match_table;
+
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -36,32 +65,23 @@
 
   <p>
   <h1>試合結果</h1>
-  <p th:if="${result}">
-  <div th:each="matches, stat:${result}">
-    <tr>
-      <td>ID:[[${stat.index}]]</td>
-      <td>user1:[[${matches.user1}]]</td>
-      <td>user2:[[${matches.user2}]]</td>
-      <td>user1の手:[[${matches.user1Hand}]]</td>
-      <td>user2の手:[[${matches.user2Hand}]]</td>
-    </tr>
+  <div>
+    <table>
+      <tbody id="match_list">
+        <span th:if="${result}">
+          <span th:each="matches, stat:${result}">
+            <tr>
+              <td>ID:[[${stat.index}]]</td>
+              <td>user1:[[${matches.user1}]]</td>
+              <td>user2:[[${matches.user2}]]</td>
+              <td>user1の手:[[${matches.user1Hand}]]</td>
+              <td>user2の手:[[${matches.user2Hand}]]</td>
+            </tr>
+          </span>
+        </span>
+      </tbody>
+    </table>
   </div>
-  </p>
-
-  <!--
-  <p>
-    <a href="/hand?te=gu">ぐー</a>
-    <a href="/hand?te=tyoki">ちょき</a>
-    <a href="/hand?te=pa">ぱー</a>
-
-  <div th:if="${hand}">
-    あなたの手 [[${hand}]]</br>
-    相手の手 [[${enemy}]]</br>
-    結果 [[${hantei}]]</br>
-
-  </div>
-  </p>
--->
 </body>
 
 </html>
