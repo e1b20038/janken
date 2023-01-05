@@ -1,6 +1,7 @@
 package oit.is.z0484.kaizi.janken.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import oit.is.z0484.kaizi.janken.model.MatchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-public class AsyncKekka {
+public class AsyncMatchtable {
   private final Logger logger = LoggerFactory.getLogger(AsyncKekka.class);
 
   @Autowired
@@ -25,15 +26,12 @@ public class AsyncKekka {
   MatchInfoMapper mimapper;
 
   @Async
-  public void ActiveMatch(SseEmitter emitter) throws IOException {
+  public void matchtable(SseEmitter emitter) throws IOException {
     logger.info("Async start");
-    Match ActiveMatch = mmapper.selectActiveMatch();
+    ArrayList<Match> allmatches = mmapper.selectAllMatches();
 
     try {
-      if (ActiveMatch.getIsActive() == true) {
-        emitter.send(ActiveMatch);
-        mimapper.updateMatchInfoF();
-      }
+        emitter.send(allmatches);
 
     } catch (Exception e) {
       logger.warn("Exception:" + e.getMessage());

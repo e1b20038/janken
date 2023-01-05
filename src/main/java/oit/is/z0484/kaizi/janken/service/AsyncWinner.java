@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import oit.is.z0484.kaizi.janken.model.Janken;
 import oit.is.z0484.kaizi.janken.model.Match;
 import oit.is.z0484.kaizi.janken.model.MatchInfoMapper;
 import oit.is.z0484.kaizi.janken.model.MatchMapper;
@@ -15,7 +16,7 @@ import oit.is.z0484.kaizi.janken.model.MatchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-public class AsyncKekka {
+public class AsyncWinner {
   private final Logger logger = LoggerFactory.getLogger(AsyncKekka.class);
 
   @Autowired
@@ -25,13 +26,14 @@ public class AsyncKekka {
   MatchInfoMapper mimapper;
 
   @Async
-  public void ActiveMatch(SseEmitter emitter) throws IOException {
+  public void winner(SseEmitter emitter) throws IOException {
     logger.info("Async start");
     Match ActiveMatch = mmapper.selectActiveMatch();
 
     try {
       if (ActiveMatch.getIsActive() == true) {
-        emitter.send(ActiveMatch);
+        String winner = Janken.match(ActiveMatch);
+        emitter.send(winner);
         mimapper.updateMatchInfoF();
       }
 

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import oit.is.z0484.kaizi.janken.service.AsyncKekka;
-
+import oit.is.z0484.kaizi.janken.service.AsyncMatchtable;
+import oit.is.z0484.kaizi.janken.service.AsyncWinner;
 import oit.is.z0484.kaizi.janken.model.Janken;
 import oit.is.z0484.kaizi.janken.model.Entry;
 import oit.is.z0484.kaizi.janken.model.User;
@@ -50,6 +51,10 @@ public class JankenController {
     model.addAttribute("users", users);
     model.addAttribute("result", result);
     model.addAttribute("matchinfo", matchinfo);
+
+    // matchのisActiveをfalseに
+    matchMapper.updateMatchF();
+
     return "janken.html";
   }
 
@@ -107,8 +112,6 @@ public class JankenController {
     User loginUser = userMapper.selectByName(loginUserName);
 
     ArrayList<MatchInfo> lookMatchInfo = matchinfoMapper.selectAllMatchInfo();
-    model.addAttribute("login_user", loginUserName);
-
     int flag = 0;
 
     for (MatchInfo mi : lookMatchInfo) {
@@ -122,10 +125,26 @@ public class JankenController {
     if (flag == 0) {
       MatchInfo addMatchInfo = new MatchInfo(loginUser.getId(), id, te);
       addMatchInfo.setIsActive(true);
-
       matchinfoMapper.insertMatchInfo(addMatchInfo);
+
     }
+    model.addAttribute("login_user", loginUserName);
     return "wait.html";
+  }
+
+  @Autowired
+  AsyncMatchtable asmatchtable;
+
+  @GetMapping("matchtable")
+  public SseEmitter asyncmatchtable() {
+    final SseEmitter emitter = new SseEmitter();
+    System.out.println("async controller matchtable");
+    try {
+      this.asmatchtable.matchtable(emitter);
+    } catch (IOException e) {
+      emitter.complete();
+    }
+    return emitter;
   }
 
   @Autowired
@@ -133,13 +152,29 @@ public class JankenController {
 
   @GetMapping("asyncKekka")
   public SseEmitter asyncKekka() {
-    final SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+    final SseEmitter emitter = new SseEmitter();
 
     try {
-      this.asynckekka.count(emitter);
+      this.asynckekka.ActiveMatch(emitter);
     } catch (IOException e) {
       emitter.complete();
     }
     return emitter;
   }
+
+  @Autowired
+  AsyncWinner aswinner;
+
+  @GetMapping("asyncWinner")
+  public SseEmitter asyncwinner() {
+    final SseEmitter emitter = new SseEmitter();
+
+    try {
+      this.aswinner.winner(emitter);
+    } catch (IOException e) {
+      emitter.complete();
+    }
+    return emitter;
+  }
+
 }
